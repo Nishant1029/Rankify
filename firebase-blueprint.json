@@ -1,0 +1,82 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile and stats",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "phoneNumber": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "user"] },
+        "stats": {
+          "type": "object",
+          "properties": {
+            "testsAttempted": { "type": "integer" },
+            "totalScore": { "type": "number" },
+            "averageRank": { "type": "number" }
+          }
+        }
+      },
+      "required": ["uid", "email"]
+    },
+    "Test": {
+      "title": "Test",
+      "description": "Mock test details",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "category": { "type": "string" },
+        "subcategory": { "type": "string" },
+        "duration": { "type": "integer" },
+        "totalMarks": { "type": "number" }
+      },
+      "required": ["title", "category", "subcategory"]
+    },
+    "Attempt": {
+      "title": "Attempt",
+      "description": "User test attempt",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "testId": { "type": "string" },
+        "score": { "type": "number" },
+        "rank": { "type": "integer" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "testId", "score"]
+    },
+    "ExamUpdate": {
+      "title": "Exam Update",
+      "description": "Important dates and notifications for upcoming exams",
+      "type": "object",
+      "properties": {
+        "examName": { "type": "string" },
+        "date": { "type": "string" },
+        "description": { "type": "string" },
+        "link": { "type": "string" }
+      },
+      "required": ["examName", "date", "description"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "/tests/{testId}": {
+      "schema": "Test",
+      "description": "Available tests"
+    },
+    "/attempts/{attemptId}": {
+      "schema": "Attempt",
+      "description": "User test attempts"
+    },
+    "/examUpdates/{updateId}": {
+      "schema": "ExamUpdate",
+      "description": "Exam notifications"
+    }
+  }
+}
